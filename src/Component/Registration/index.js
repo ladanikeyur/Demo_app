@@ -1,9 +1,6 @@
-import { Box, Card } from "@mui/material";
 import React, { useState } from "react";
 import style from "./Registration.module.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_URL } from "../../utils";
 
 export default function Registration() {
   const [userDetail, setUserDetail] = useState({

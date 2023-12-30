@@ -1,10 +1,8 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import style from "../Description.module.css";
-import { Button, TextareaAutosize } from "@mui/material";
+import { Button } from "@mui/material";
 
 export default function Description() {
-  const dispatch = useDispatch();
   return (
     <div className={`card ${style.cardStyle}`}>
       <textarea

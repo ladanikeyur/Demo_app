@@ -1,4 +1,3 @@
-import { Box, Card } from "@mui/material";
 import React, { useState } from "react";
 import style from "./OtpCode.module.css";
 import { useNavigate } from "react-router-dom";

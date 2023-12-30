@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import PhoneIcon from "@mui/icons-material/Phone";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo, changeStap } from "../../Redux/Slice/FormSlice";
+import { changeStap } from "../../Redux/Slice/FormSlice";
 import Description from "./Form/Description";
 
 function TabPanel(props) {
@@ -47,7 +47,6 @@ function a11yProps(index) {
 
 export default function FullWidthTabs() {
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
   const form = useSelector((state) => state.form);
   const dispatch = useDispatch();
   const handleChange = (event, newValue) => {
