@@ -11,7 +11,7 @@ export default function Login() {
   const navigation = useNavigate();
 
   const hendleuserLogin = () => {
-    // navigation("/otp");
+    navigation("/otp");
     console.log("userAuth", userAuth);
   };
   return (

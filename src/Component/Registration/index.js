@@ -13,18 +13,18 @@ export default function Registration() {
   const navigation = useNavigate();
 
   const hendleuserRagistor = () => {
-    // navigation("/otp");
-    axios
-      .get(`${API_URL}/auth/signup/keyurpatl5943@gmail.com`, {
-        username: userDetail?.userName,
-        password: userDetail?.password,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
+    navigation("/otp");
+    // axios
+    //   .get(`${API_URL}/auth/signup/keyurpatl5943@gmail.com`, {
+    //     username: userDetail?.userName,
+    //     password: userDetail?.password,
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log("error", err);
+    //   });
     console.log(userDetail);
   };
 

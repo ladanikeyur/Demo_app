@@ -8,7 +8,7 @@ export default function OtpCode() {
   const navigation = useNavigate();
 
   const hendleuserOtpVerify = () => {
-    // navigation("/tab");
+    navigation("/tab");
     console.log("userAuth", userAuthOtp);
   };
   return (
