@@ -1,18 +1,10 @@
-import {
-  createBrowserRouter,
-  Outlet,
-  Route,
-  RouterProvider,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./Component/Login";
 import Registration from "./Component/Registration";
 import TabForm from "./Component/TabForm";
 import OtpCode from "./Component/OtpCode";
 import "react-notifications/lib/notifications.css";
-import { NotificationContainer } from "react-notifications";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 function App() {
   const key = localStorage.getItem("key");

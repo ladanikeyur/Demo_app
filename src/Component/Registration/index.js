@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import style from "./Registration.module.css";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NotificationManager } from "react-notifications";
 import { Box, CircularProgress } from "@mui/material";
@@ -13,16 +13,20 @@ export default function Registration() {
   const [loader, setLoader] = useState(false);
   const navigation = useNavigate();
 
-  const validateEmail = (email) => {
-    return email.match(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-  };
+  // const validateEmail = (email) => {
+  //   return email.match(
+  //     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  //   );
+  // };
 
   const hendleuserRagistor = () => {
     setSubmit(true);
     if (userDetail.userName !== "") {
-      if (validateEmail(userDetail.userName)) {
+      if (
+        /^[\-0-9a-zA-Z\.\+_]+@[\-0-9a-zA-Z\.\+_]+\.[a-zA-Z]{2,}$/.test(
+          String(userDetail.userName)
+        )
+      ) {
         setLoader(true);
         axios
           .get(`http://api.victo.ai/auth/signup/${userDetail?.userName}`)

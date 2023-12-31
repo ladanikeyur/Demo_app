@@ -13,16 +13,20 @@ export default function Login() {
   const [submit, setSubmit] = useState(false);
   const navigation = useNavigate();
 
-  const validateEmail = (email) => {
-    return email.match(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-  };
+  // const validateEmail = (email) => {
+  //   return email.match(
+  //     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  //   );
+  // };
 
   const hendleuserLogin = () => {
     setSubmit(true);
     if (userAuth.userName !== "") {
-      if (validateEmail(userAuth.userName)) {
+      if (
+        /^[\-0-9a-zA-Z\.\+_]+@[\-0-9a-zA-Z\.\+_]+\.[a-zA-Z]{2,}$/.test(
+          String(userAuth.userName)
+        )
+      ) {
         setLoader(true);
         axios
           .get(`http://api.victo.ai/auth/login/${userAuth?.userName}`)
