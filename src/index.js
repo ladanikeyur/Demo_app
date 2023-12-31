@@ -7,7 +7,7 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
 import { Provider } from "react-redux";
 import Store from "./Redux/Store";
-import { BrowserRouter, Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { NotificationContainer } from "react-notifications";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -20,7 +20,7 @@ function App() {
         navigate("/");
       }
     }
-  }, [key, window.location.pathname]);
+  }, [key, navigate]);
 
   return (
     <>
