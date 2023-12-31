@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NotificationManager } from "react-notifications";
 import { Box, Button, CircularProgress } from "@mui/material";
+import { API_URL } from "../../utils";
 
 export default function OtpCode() {
   const [userAuthOtp, setUserAuthOtp] = useState(null);
@@ -27,8 +28,8 @@ export default function OtpCode() {
       setLoader({ ...loader, button: true });
       const url =
         location.state.type === "signup"
-          ? `http://api.victo.ai/auth/signup/${pars?.email}`
-          : `http://api.victo.ai/auth/login/${pars?.email}`;
+          ? `${API_URL}auth/signup/${pars?.email}`
+          : `${API_URL}auth/login/${pars?.email}`;
       axios
         .post(url, {
           email: pars?.email,
@@ -62,8 +63,8 @@ export default function OtpCode() {
     setLoader({ ...loader, resend: true });
     const url =
       location.state.type === "signup"
-        ? `http://api.victo.ai/auth/signup/${pars?.email}`
-        : `http://api.victo.ai/auth/login/${pars?.email}`;
+        ? `${API_URL}auth/signup/${pars?.email}`
+        : `${API_URL}auth/login/${pars?.email}`;
     axios
       .get(url)
       .then((res) => {

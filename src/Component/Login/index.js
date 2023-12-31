@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NotificationManager } from "react-notifications";
 import { Box, CircularProgress } from "@mui/material";
+import { API_URL } from "../../utils";
 
 export default function Login() {
   const [userAuth, setUserAuth] = useState({
@@ -23,13 +24,13 @@ export default function Login() {
     setSubmit(true);
     if (userAuth.userName !== "") {
       if (
-        /^[\-0-9a-zA-Z\.\+_]+@[\-0-9a-zA-Z\.\+_]+\.[a-zA-Z]{2,}$/.test(
+        /^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,}$/.test(
           String(userAuth.userName)
         )
       ) {
         setLoader(true);
         axios
-          .get(`http://api.victo.ai/auth/login/${userAuth?.userName}`)
+          .get(`${API_URL}auth/login/${userAuth?.userName}`)
           .then((res) => {
             if (res?.data?.passhash) {
               localStorage.setItem("user", JSON.stringify(res?.data));
