@@ -11,6 +11,9 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import { useDispatch, useSelector } from "react-redux";
 import { changeStap } from "../../Redux/Slice/FormSlice";
 import Description from "./Form/Description";
+import { Button, IconButton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,6 +50,7 @@ function a11yProps(index) {
 
 export default function FullWidthTabs() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const form = useSelector((state) => state.form);
   const dispatch = useDispatch();
   const handleChange = (event, newValue) => {
@@ -58,69 +62,133 @@ export default function FullWidthTabs() {
   };
 
   return (
-    <Box sx={{ bgcolor: "background.paper", width: "100%" }}>
-      <AppBar position="static">
-        <Tabs
-          value={form?.formStap}
-          onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="inherit"
-          variant="fullWidth"
-          aria-label="full width tabs example"
-        >
-          <Tab
-            icon={<PhoneIcon />}
-            iconPosition="start"
-            label="Description"
-            {...a11yProps(0)}
-          />
-          <Tab
-            icon={<PhoneIcon />}
-            iconPosition="start"
-            label="Module"
-            {...a11yProps(1)}
-          />
-          <Tab
-            icon={<PhoneIcon />}
-            iconPosition="start"
-            label="Tecnologi"
-            {...a11yProps(2)}
-          />
-          <Tab
-            icon={<PhoneIcon />}
-            iconPosition="start"
-            label="Frountend"
-            {...a11yProps(3)}
-          />
-          <Tab
-            icon={<PhoneIcon />}
-            iconPosition="start"
-            label="Backend"
-            {...a11yProps(4)}
-          />
-        </Tabs>
-      </AppBar>
-      <SwipeableViews
-        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        index={form?.formStap}
-        onChangeIndex={handleChangeIndex}
+    <>
+      <IconButton
+        variant="contained"
+        sx={{ marginLeft: "auto", display: "block" }}
+        onClick={() => {
+          localStorage.clear();
+          navigate("/");
+        }}
       >
-        <TabPanel value={form?.formStap} index={0} dir={theme.direction}>
-          <Description />
-        </TabPanel>
-        <TabPanel value={form?.formStap} index={1} dir={theme.direction}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={form?.formStap} index={2} dir={theme.direction}>
-          Item Three
-        </TabPanel>
-        <TabPanel value={form?.formStap} index={3} dir={theme.direction}>
-          Item Four
-        </TabPanel>
-        <TabPanel value={form?.formStap} index={4} dir={theme.direction}>
-          Item Five
-        </TabPanel>
-      </SwipeableViews>
-    </Box>
+        <LogoutIcon />
+      </IconButton>
+      <Box
+        sx={{
+          bgcolor: "background.paper",
+          width: "80%",
+          margin: "auto",
+          display: "block",
+        }}
+      >
+        <AppBar position="static" sx={{ backgroundColor: "#343a40" }}>
+          <Tabs
+            value={form?.formStap}
+            onChange={handleChange}
+            indicatorColor="light"
+            textColor="inherit"
+            variant="scrollable"
+            scrollButtons="auto"
+          >
+            <Tab
+              // icon={<PhoneIcon />}
+              // iconPosition="start"
+              sx={{ textTransform: "initial" }}
+              label="Original requirements"
+              {...a11yProps(0)}
+            />
+            <Tab
+              // icon={<PhoneIcon />}
+              // iconPosition="start"
+              sx={{ textTransform: "initial" }}
+              label="User stories"
+              {...a11yProps(1)}
+            />
+            <Tab
+              // icon={<PhoneIcon />}
+              // iconPosition="start"
+              sx={{ textTransform: "initial" }}
+              label="Competitive analysis"
+              {...a11yProps(2)}
+            />
+            <Tab
+              // icon={<PhoneIcon />}
+              // iconPosition="start"
+              sx={{ textTransform: "initial" }}
+              label="Competitive quadrand chart"
+              {...a11yProps(3)}
+            />
+            <Tab
+              // icon={<PhoneIcon />}
+              // iconPosition="start"
+              sx={{ textTransform: "initial" }}
+              label="Requirement analysis"
+              {...a11yProps(4)}
+            />
+            <Tab
+              // icon={<PhoneIcon />}
+              // iconPosition="start"
+              sx={{ textTransform: "initial" }}
+              label="Requirement pool"
+              {...a11yProps(5)}
+            />
+            <Tab
+              // icon={<PhoneIcon />}
+              // iconPosition="start"
+              sx={{ textTransform: "initial" }}
+              label="Ui design draft"
+              {...a11yProps(6)}
+            />
+            <Tab
+              // icon={<PhoneIcon />}
+              // iconPosition="start"
+              sx={{ textTransform: "initial" }}
+              label="Data structures and interfaces"
+              {...a11yProps(7)}
+            />
+            <Tab
+              // icon={<PhoneIcon />}
+              // iconPosition="start"
+              sx={{ textTransform: "initial" }}
+              label="Recommended technologies"
+              {...a11yProps(8)}
+            />
+          </Tabs>
+        </AppBar>
+        <SwipeableViews
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+          index={form?.formStap}
+          onChangeIndex={handleChangeIndex}
+        >
+          <TabPanel value={form?.formStap} index={0} dir={theme.direction}>
+            <Description />
+          </TabPanel>
+          <TabPanel value={form?.formStap} index={1} dir={theme.direction}>
+            Item Two
+          </TabPanel>
+          <TabPanel value={form?.formStap} index={2} dir={theme.direction}>
+            Item Three
+          </TabPanel>
+          <TabPanel value={form?.formStap} index={3} dir={theme.direction}>
+            Item Four
+          </TabPanel>
+          <TabPanel value={form?.formStap} index={4} dir={theme.direction}>
+            Item Five
+          </TabPanel>
+          <TabPanel value={form?.formStap} index={5} dir={theme.direction}>
+            Item Five
+          </TabPanel>
+          <TabPanel value={form?.formStap} index={6} dir={theme.direction}>
+            Item Five
+          </TabPanel>
+          <TabPanel value={form?.formStap} index={7} dir={theme.direction}>
+            Item Five
+          </TabPanel>
+          <TabPanel value={form?.formStap} index={8} dir={theme.direction}>
+            Item Eight
+          </TabPanel>
+        </SwipeableViews>
+      </Box>
+    </>
   );
 }

@@ -18,3 +18,8 @@
   margin-top: 10px;
   color: #0d6efd;
 }
+
+.error {
+  color: red;
+  margin: 5px;
+}

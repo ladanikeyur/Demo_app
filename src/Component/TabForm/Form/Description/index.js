@@ -10,11 +10,19 @@ export default function Description() {
         className={`form-control ${style.textAriaStyle}`}
       />
       <div className={style.buttonFlex}>
-        <Button variant="contained" color="primary">
-          Reset
+        <Button
+          variant="contained"
+          sx={{ textTransform: "initial", backgroundColor: "#343a40" }}
+          color="primary"
+        >
+          Regenerate
         </Button>
-        <Button variant="contained" color="primary">
-          Save
+        <Button
+          variant="contained"
+          sx={{ textTransform: "initial", backgroundColor: "#343a40" }}
+          color="primary"
+        >
+          Next
         </Button>
       </div>
     </div>

@@ -1,17 +1,51 @@
 import React, { useState } from "react";
 import style from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { NotificationManager } from "react-notifications";
+import { Box, CircularProgress } from "@mui/material";
 
 export default function Login() {
   const [userAuth, setUserAuth] = useState({
     userName: "",
-    password: "",
   });
+  const [loader, setLoader] = useState(false);
+  const [submit, setSubmit] = useState(false);
   const navigation = useNavigate();
 
+  const validateEmail = (email) => {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
+
   const hendleuserLogin = () => {
-    navigation("/otp");
-    console.log("userAuth", userAuth);
+    setSubmit(true);
+    if (userAuth.userName !== "") {
+      if (validateEmail(userAuth.userName)) {
+        setLoader(true);
+        axios
+          .get(`http://api.victo.ai/auth/login/${userAuth?.userName}`)
+          .then((res) => {
+            if (res?.data?.passhash) {
+              localStorage.setItem("user", JSON.stringify(res?.data));
+              NotificationManager.success("OTP send Successfuly");
+              navigation("/otp", { state: { type: "login" } });
+              setUserAuth({ userName: "" });
+              setLoader(false);
+            } else {
+              NotificationManager.error(res?.data);
+              setLoader(false);
+            }
+          })
+          .catch((err) => {
+            NotificationManager.error(err);
+            setLoader(false);
+          });
+      } else {
+        NotificationManager.error("Please Enter valid Email");
+      }
+    }
   };
   return (
     <div className={style?.main}>
@@ -20,29 +54,38 @@ export default function Login() {
         <br />
         <input
           type="email"
+          value={userAuth.userName}
           onChange={(e) => {
-            setUserAuth({ ...userAuth, userName: e.target.value });
+            setUserAuth({ userName: e.target.value });
           }}
           placeholder="Email"
           className="form-control"
         />
+        {submit === true && userAuth.userName === "" ? (
+          <small className={style.error}>Please Enter Your Email</small>
+        ) : null}
         <br />
-        <input
-          onChange={(e) => {
-            setUserAuth({ ...userAuth, password: e.target.value });
-          }}
-          className="form-control"
-          type="password"
-          placeholder="Password"
-        />
-        <br />
+
         <button
           className="btn btn-primary"
+          disabled={loader}
           onClick={() => {
             hendleuserLogin();
           }}
         >
-          Login
+          {loader ? (
+            <Box
+              sx={{
+                margin: "auto",
+                display: "block",
+              }}
+            >
+              <CircularProgress size={15} color="inherit" />
+              &nbsp; Please Wait
+            </Box>
+          ) : (
+            "Login"
+          )}
         </button>
         <button
           className={`${style.Registration}`}
