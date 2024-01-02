@@ -10,9 +10,12 @@ import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
 import { changeStap } from "../../Redux/Slice/FormSlice";
 import Description from "./Form/Description";
-import { IconButton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import LogoutIcon from "@mui/icons-material/Logout";
+import UserStories from "./Form/UserStories";
+import CompetitiveAnalysis from "./Form/CompetitiveAnalysis";
+import CompetitiveQuadrandChart from "./Form/CompetitiveQuadrandChart";
+import RequirementAnalysis from "./Form/RequirementAnalysis";
+import RequirementPool from "./Form/RequrimentPool";
+import Design from "./Form/Design";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,7 +52,6 @@ function a11yProps(index) {
 
 export default function FullWidthTabs() {
   const theme = useTheme();
-  const navigate = useNavigate();
   const form = useSelector((state) => state.form);
   const dispatch = useDispatch();
   const handleChange = (event, newValue) => {
@@ -62,7 +64,7 @@ export default function FullWidthTabs() {
 
   return (
     <>
-      <IconButton
+      {/* <IconButton
         variant="contained"
         sx={{ marginLeft: "auto", display: "block" }}
         onClick={() => {
@@ -71,16 +73,23 @@ export default function FullWidthTabs() {
         }}
       >
         <LogoutIcon />
-      </IconButton>
+      </IconButton> */}
       <Box
         sx={{
           bgcolor: "background.paper",
           width: "80%",
           margin: "auto",
           display: "block",
+          marginTop: "2%",
         }}
       >
-        <AppBar position="static" sx={{ backgroundColor: "#343a40" }}>
+        <AppBar
+          position="static"
+          sx={{
+            backgroundColor: "#1034A6",
+            ":hover": { backgroundColor: "#1034A6" },
+          }}
+        >
           <Tabs
             value={form?.formStap}
             onChange={handleChange}
@@ -92,66 +101,102 @@ export default function FullWidthTabs() {
             <Tab
               // icon={<PhoneIcon />}
               // iconPosition="start"
-              sx={{ textTransform: "initial" }}
-              label="Original requirements"
+              sx={{
+                textTransform: "initial",
+                backgroundColor: form?.formStap === 0 ? "#E33530" : "#343a40",
+                color: form?.formStap === 0 ? "#ffffff" : "white",
+              }}
+              label="Original Requirements"
               {...a11yProps(0)}
             />
             <Tab
               // icon={<PhoneIcon />}
               // iconPosition="start"
-              sx={{ textTransform: "initial" }}
-              label="User stories"
+              sx={{
+                textTransform: "initial",
+                backgroundColor: form?.formStap === 1 ? "#E33530" : "#343a40",
+                color: form?.formStap === 1 ? "#ffffff" : "white",
+              }}
+              label="User Stories"
               {...a11yProps(1)}
             />
             <Tab
               // icon={<PhoneIcon />}
               // iconPosition="start"
-              sx={{ textTransform: "initial" }}
-              label="Competitive analysis"
+              sx={{
+                textTransform: "initial",
+                backgroundColor: form?.formStap === 2 ? "#E33530" : "#343a40",
+                color: form?.formStap === 2 ? "#ffffff" : "white",
+              }}
+              label="Competitive Analysis"
               {...a11yProps(2)}
             />
             <Tab
               // icon={<PhoneIcon />}
               // iconPosition="start"
-              sx={{ textTransform: "initial" }}
-              label="Competitive quadrand chart"
+              sx={{
+                textTransform: "initial",
+                backgroundColor: form?.formStap === 3 ? "#E33530" : "#343a40",
+                color: form?.formStap === 3 ? "#ffffff" : "white",
+              }}
+              label="Competitive Quadrand Chart"
               {...a11yProps(3)}
             />
             <Tab
               // icon={<PhoneIcon />}
               // iconPosition="start"
-              sx={{ textTransform: "initial" }}
-              label="Requirement analysis"
+              sx={{
+                textTransform: "initial",
+                backgroundColor: form?.formStap === 4 ? "#E33530" : "#343a40",
+                color: form?.formStap === 4 ? "#ffffff" : "white",
+              }}
+              label="Requirement Analysis"
               {...a11yProps(4)}
             />
             <Tab
               // icon={<PhoneIcon />}
               // iconPosition="start"
-              sx={{ textTransform: "initial" }}
-              label="Requirement pool"
+              sx={{
+                textTransform: "initial",
+                backgroundColor: form?.formStap === 5 ? "#E33530" : "#343a40",
+                color: form?.formStap === 5 ? "#ffffff" : "white",
+              }}
+              label="Requirement Pool"
               {...a11yProps(5)}
             />
             <Tab
               // icon={<PhoneIcon />}
               // iconPosition="start"
-              sx={{ textTransform: "initial" }}
-              label="Ui design draft"
+              sx={{
+                textTransform: "initial",
+                backgroundColor: form?.formStap === 6 ? "#E33530" : "#343a40",
+                color: form?.formStap === 6 ? "#ffffff" : "white",
+              }}
+              label="UI Design Draft"
               {...a11yProps(6)}
             />
-            <Tab
+            {/* <Tab
               // icon={<PhoneIcon />}
               // iconPosition="start"
-              sx={{ textTransform: "initial" }}
-              label="Data structures and interfaces"
+              sx={{
+                textTransform: "initial",
+                backgroundColor: form?.formStap === 7 ? "#E33530" : "#343a40",
+                color: form?.formStap === 7 ? "#ffffff" : "white",
+              }}
+              label="Data Structures And Interfaces"
               {...a11yProps(7)}
             />
             <Tab
               // icon={<PhoneIcon />}
               // iconPosition="start"
-              sx={{ textTransform: "initial" }}
-              label="Recommended technologies"
+              sx={{
+                textTransform: "initial",
+                backgroundColor: form?.formStap === 8 ? "#E33530" : "#343a40",
+                color: form?.formStap === 8 ? "#ffffff" : "white",
+              }}
+              label="Recommended Technologies"
               {...a11yProps(8)}
-            />
+            /> */}
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -163,29 +208,29 @@ export default function FullWidthTabs() {
             <Description />
           </TabPanel>
           <TabPanel value={form?.formStap} index={1} dir={theme.direction}>
-            Item Two
+            <UserStories />
           </TabPanel>
           <TabPanel value={form?.formStap} index={2} dir={theme.direction}>
-            Item Three
+            <CompetitiveAnalysis />
           </TabPanel>
           <TabPanel value={form?.formStap} index={3} dir={theme.direction}>
-            Item Four
+            <CompetitiveQuadrandChart />
           </TabPanel>
           <TabPanel value={form?.formStap} index={4} dir={theme.direction}>
-            Item Five
+            <RequirementAnalysis />
           </TabPanel>
           <TabPanel value={form?.formStap} index={5} dir={theme.direction}>
-            Item Five
+            <RequirementPool />
           </TabPanel>
           <TabPanel value={form?.formStap} index={6} dir={theme.direction}>
-            Item Five
+            <Design />
           </TabPanel>
-          <TabPanel value={form?.formStap} index={7} dir={theme.direction}>
-            Item Five
+          {/* <TabPanel value={form?.formStap} index={7} dir={theme.direction}>
+            <Database />
           </TabPanel>
           <TabPanel value={form?.formStap} index={8} dir={theme.direction}>
             Item Eight
-          </TabPanel>
+          </TabPanel> */}
         </SwipeableViews>
       </Box>
     </>

@@ -17,11 +17,6 @@ export default function OtpCode() {
     resend: false,
   });
   const pars = JSON.parse(userData);
-  // const hendleuserOtpVerify = () => {
-
-  //   console.log("userAuth", userAuthOtp);
-  // };
-
   const hendleuserOtpVerify = () => {
     setSubmit(true);
     if (userAuthOtp) {
@@ -45,7 +40,7 @@ export default function OtpCode() {
                 ? "user Registration successfuly"
                 : "user Login successfuly"
             );
-            navigation("/main");
+            navigation("/");
             setLoader({ ...loader, button: false });
           } else {
             NotificationManager.error(res?.data);
@@ -148,14 +143,6 @@ export default function OtpCode() {
             "Verify"
           )}
         </button>
-        {/* <button
-          className={`${style.Registration}`}
-          onClick={() => {
-            navigation("/Registration");
-          }}
-        >
-          Registration
-        </button> */}
       </div>
     </div>
   );

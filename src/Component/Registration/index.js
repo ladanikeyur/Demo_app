@@ -92,7 +92,7 @@ export default function Registration() {
         <button
           className={`${style.Registration}`}
           onClick={() => {
-            navigation("/");
+            navigation("/login");
           }}
         >
           Login
