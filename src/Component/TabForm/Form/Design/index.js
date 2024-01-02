@@ -29,6 +29,7 @@ const Design = () => {
     if (!data?.description?.ui_design_draft) {
       hendleGanrate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function triggerExample() {

@@ -31,6 +31,7 @@ const RequirementPool = () => {
     if (!data?.description?.requirement_pool) {
       hendleGanrate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function triggerExample() {

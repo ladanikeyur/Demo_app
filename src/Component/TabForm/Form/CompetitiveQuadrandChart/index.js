@@ -31,6 +31,7 @@ const CompetitiveQuadrandChart = () => {
     if (!data?.description?.competitive_quadrand_chart) {
       hendleGanrate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>

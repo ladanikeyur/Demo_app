@@ -32,6 +32,7 @@ const CompetitiveAnalysis = () => {
     if (!data?.description?.competitive_analysis) {
       hendleGanrate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function triggerExample() {

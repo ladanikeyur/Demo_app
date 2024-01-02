@@ -32,6 +32,7 @@ const UserStories = () => {
     if (!data?.description?.user_stories) {
       hendleGanrate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function triggerExample() {
