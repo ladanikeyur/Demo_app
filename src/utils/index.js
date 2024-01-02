@@ -1,1 +1,1 @@
-export const API_URL = "http://api.victo.ai/";
+export const API_URL = "https://api.victo.ai/";
