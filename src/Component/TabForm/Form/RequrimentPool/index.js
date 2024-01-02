@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../../../../utils";
 import {
@@ -54,7 +54,7 @@ const RequirementPool = () => {
                 triggerExample();
               }}
             >
-              <img src={copy} />
+              <img src={copy} alt="img" />
             </IconButton>
           </div>
           <p>

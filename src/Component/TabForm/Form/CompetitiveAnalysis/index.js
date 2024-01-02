@@ -55,7 +55,7 @@ const CompetitiveAnalysis = () => {
                 triggerExample();
               }}
             >
-              <img src={copy} />
+              <img src={copy} alt="img" />
             </IconButton>
           </div>
           {data?.description?.competitive_analysis?.map((val, i) => {

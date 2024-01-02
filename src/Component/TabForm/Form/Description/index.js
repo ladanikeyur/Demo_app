@@ -62,7 +62,7 @@ export default function Description() {
                   triggerExample();
                 }}
               >
-                <img src={copy} />
+                <img src={copy} alt="img" />
               </IconButton>
             </div>
             {data?.description?.project_goals?.map((val, i) => {

@@ -28,17 +28,7 @@ export const formSlice = createSlice({
 });
 
 // this is for dispatch
-export const {
-  addDescription,
-  changeStap,
-  addStories,
-  CompetitiveAnalysisAction,
-  CompetitiveQuadrandChartAction,
-  RequirementAnalysisAction,
-  loeading,
-  RequirementPoolAction,
-  designAction,
-} = formSlice.actions;
+export const { addDescription, changeStap, loeading } = formSlice.actions;
 
 // this is for configureStore
 export default formSlice.reducer;

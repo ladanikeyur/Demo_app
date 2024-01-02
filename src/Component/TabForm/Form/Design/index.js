@@ -1,18 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../../../../utils";
-import {
-  CompetitiveAnalysisAction,
-  CompetitiveQuadrandChartAction,
-  RequirementAnalysisAction,
-  RequirementPoolAction,
-  addDescription,
-  addStories,
-  changeStap,
-  designAction,
-  loeading,
-} from "../../../../Redux/Slice/FormSlice";
+import { addDescription, loeading } from "../../../../Redux/Slice/FormSlice";
 import { Button, Card, CircularProgress, IconButton } from "@mui/material";
 import style from "../Description.module.css";
 import copy from "../../../../Assets/Image/copy.svg";
@@ -62,7 +52,7 @@ const Design = () => {
                 triggerExample();
               }}
             >
-              <img src={copy} />
+              <img src={copy} alt="img" />
             </IconButton>
           </div>
           {data?.description?.ui_design_draft}

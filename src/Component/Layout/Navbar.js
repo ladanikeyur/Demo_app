@@ -18,7 +18,13 @@ const Navbar = () => {
   };
   return (
     <div className={style.navbarMain}>
-      <img src={logo} width="15%" height={40} style={{ margin: "10px" }} />
+      <img
+        src={logo}
+        alt="img"
+        width="15%"
+        height={40}
+        style={{ margin: "10px" }}
+      />
       <Button
         id="fade-button"
         sx={{
@@ -38,7 +44,7 @@ const Navbar = () => {
           handleClick(e);
         }}
       >
-        <img src={profile} width={35} height={35} />
+        <img src={profile} alt="img" width={35} height={35} />
       </Button>
       <Menu
         id="fade-menu"

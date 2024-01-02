@@ -57,7 +57,7 @@ const UserStories = () => {
                     triggerExample();
                   }}
                 >
-                  <img src={copy} />
+                  <img src={copy} alt="img" />
                 </IconButton>
               </div>
               {data?.description?.user_stories?.map((val, i) => {
