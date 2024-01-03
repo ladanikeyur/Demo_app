@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div className="main-layout">
-      {key ? <Sidebar sideBar={sideBar} /> : null}
+      <Sidebar sideBar={sideBar} />
       <div style={{ width: "100%" }}>
         <Navbar
           sideBar={sideBar}
