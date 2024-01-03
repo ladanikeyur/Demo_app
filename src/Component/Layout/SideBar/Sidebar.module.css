@@ -1,0 +1,27 @@
+.mainSidebar {
+  width: 25%;
+  background-color: #1034a6;
+  transition: all 0.5s;
+}
+
+.mainSidebarClose {
+  width: 0%;
+  background-color: #1034a6;
+  transition: all 0.5s;
+}
+
+.sidebarMenu {
+  padding: 10px;
+}
+
+.SidbarMenuItem {
+  background-color: white;
+  padding: 5px;
+  border-radius: 7px;
+  margin-bottom: 10px;
+}
+
+.menuLabel {
+  font-weight: 600;
+  font-size: 14px;
+}

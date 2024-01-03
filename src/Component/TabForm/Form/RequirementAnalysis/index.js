@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../../../../utils";
 import {
@@ -10,10 +10,13 @@ import {
 import { Button, Card, CircularProgress, IconButton } from "@mui/material";
 import style from "../Description.module.css";
 import copy from "../../../../Assets/Image/copy.svg";
+import Edit from "../../../../Assets/Image/Edit.svg";
 
 const RequirementAnalysis = () => {
   const data = useSelector((state) => state?.form);
   const dispatch = useDispatch();
+  const [isEdit, setIsEdit] = useState(false);
+  const [esitContent, setEditContent] = useState("");
 
   const hendleGanrate = () => {
     dispatch(loeading(true));
@@ -51,15 +54,38 @@ const RequirementAnalysis = () => {
             <h5 className="text-center">
               {data?.description?.project_name}: Requirement Analysis
             </h5>
-            <IconButton
-              onClick={() => {
-                triggerExample();
-              }}
-            >
-              <img src={copy} alt="img" />
-            </IconButton>
+            <div>
+              <IconButton
+                onClick={() => {
+                  setIsEdit(!isEdit);
+                  setEditContent(
+                    esitContent ? "" : data?.description?.requirement_analysis
+                  );
+                }}
+              >
+                <img src={Edit} alt="img" />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  triggerExample();
+                }}
+              >
+                <img src={copy} alt="img" />
+              </IconButton>
+            </div>
           </div>
-          {data?.description?.requirement_analysis}
+
+          {isEdit ? (
+            <textarea
+              className={`form-control ${style.textAriaStyle} mb-5`}
+              value={esitContent}
+              onChange={(e) => {
+                setEditContent(e.target.value);
+              }}
+            />
+          ) : (
+            data?.description?.requirement_analysis
+          )}
         </Card>
       ) : null}
       <div className={style.buttonFlex}>
@@ -89,7 +115,7 @@ const RequirementAnalysis = () => {
             dispatch(changeStap(5));
           }}
         >
-          Next
+          {isEdit ? "save" : "Next"}
         </Button>
       </div>
     </div>

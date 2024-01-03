@@ -5,6 +5,9 @@
   /* overflow: hidden; */
 }
 
+:root {
+  overflow: hidden;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 3px;
@@ -26,4 +29,8 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.main-layout {
+  display: flex;
 }

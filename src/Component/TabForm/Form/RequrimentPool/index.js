@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../../../../utils";
 import {
@@ -10,9 +10,12 @@ import {
 import { Button, Card, CircularProgress, IconButton } from "@mui/material";
 import style from "../Description.module.css";
 import copy from "../../../../Assets/Image/copy.svg";
+import Edit from "../../../../Assets/Image/Edit.svg";
 
 const RequirementPool = () => {
   const data = useSelector((state) => state?.form);
+  const [isEdit, setIsEdit] = useState(false);
+  const [esitContent, setEditContent] = useState([]);
   const dispatch = useDispatch();
   const hendleGanrate = () => {
     dispatch(loeading(true));
@@ -50,16 +53,30 @@ const RequirementPool = () => {
             <h5 className="text-center">
               {data?.description?.project_name}: Requirement Pool
             </h5>
-            <IconButton
-              onClick={() => {
-                triggerExample();
-              }}
-            >
-              <img src={copy} alt="img" />
-            </IconButton>
+            <div>
+              <IconButton
+                onClick={() => {
+                  setIsEdit(!isEdit);
+                  setEditContent(
+                    esitContent.length > 0
+                      ? ""
+                      : data?.description?.requirement_pool
+                  );
+                }}
+              >
+                <img src={Edit} alt="img" />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  triggerExample();
+                }}
+              >
+                <img src={copy} alt="img" />
+              </IconButton>
+            </div>
           </div>
           <p>
-            {data?.description?.requirement_pool?.length > 0
+            {/* {data?.description?.requirement_pool?.length > 0
               ? data?.description?.requirement_pool?.map((val, i) => {
                   const key = Object.keys(val);
                   //   setContent(content + val[key[0]]);
@@ -71,7 +88,26 @@ const RequirementPool = () => {
                     </>
                   );
                 })
-              : null}
+              : null} */}
+
+            {data?.description?.requirement_pool?.map((val, i) => {
+              const key = Object.keys(val);
+              return isEdit ? (
+                i < 1 ? (
+                  <textarea
+                    className={`form-control ${style.textAriaStyle} mb-5`}
+                    value={esitContent}
+                    onChange={(e) => {
+                      setEditContent(e.target.value);
+                    }}
+                  />
+                ) : null
+              ) : (
+                <p>
+                  {i + 1}. {val[key[0]]}
+                </p>
+              );
+            })}
           </p>
         </Card>
       )}
@@ -102,7 +138,7 @@ const RequirementPool = () => {
             dispatch(changeStap(6));
           }}
         >
-          Next
+          {isEdit ? "save" : "Next"}
         </Button>
       </div>
     </div>

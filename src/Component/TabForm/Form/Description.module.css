@@ -24,13 +24,14 @@
   height: 30vh;
   overflow: auto;
   overflow-x: hidden;
+  width: 100%;
 }
 
 .loadingScreen {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 75vw;
+  width: 55vw;
   overflow: hidden;
 }
 

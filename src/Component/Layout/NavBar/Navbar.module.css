@@ -1,0 +1,16 @@
+.navbarMain {
+  background-color: #1034a6;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ProfileImage {
+  border-radius: 100px;
+  object-fit: cover;
+}
+
+.loginButton {
+  margin-right: 10px;
+}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../../../../utils";
 import { addDescription, loeading } from "../../../../Redux/Slice/FormSlice";
@@ -7,10 +7,13 @@ import { Button, Card, CircularProgress, IconButton } from "@mui/material";
 import style from "../Description.module.css";
 import copy from "../../../../Assets/Image/copy.svg";
 import { useNavigate } from "react-router-dom";
+import Edit from "../../../../Assets/Image/Edit.svg";
 
 const Design = () => {
   const data = useSelector((state) => state?.form);
   const dispatch = useDispatch();
+  const [isEdit, setIsEdit] = useState(false);
+  const [esitContent, setEditContent] = useState([]);
   const navigate = useNavigate();
   const hendleGanrate = () => {
     dispatch(loeading(true));
@@ -48,15 +51,38 @@ const Design = () => {
             <h5 className="text-center">
               {data?.description?.project_name}: UI Design Draft
             </h5>
-            <IconButton
-              onClick={() => {
-                triggerExample();
-              }}
-            >
-              <img src={copy} alt="img" />
-            </IconButton>
+            <div>
+              <IconButton
+                onClick={() => {
+                  setIsEdit(!isEdit);
+                  setEditContent(
+                    esitContent ? "" : data?.description?.ui_design_draft
+                  );
+                }}
+              >
+                <img src={Edit} alt="img" />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  triggerExample();
+                }}
+              >
+                <img src={copy} alt="img" />
+              </IconButton>
+            </div>
           </div>
-          {data?.description?.ui_design_draft}
+
+          {isEdit ? (
+            <textarea
+              className={`form-control ${style.textAriaStyle} mb-5`}
+              value={esitContent}
+              onChange={(e) => {
+                setEditContent(e.target.value);
+              }}
+            />
+          ) : (
+            data?.description?.ui_design_draft
+          )}
         </Card>
       ) : null}
       <div className={style.buttonFlex}>
@@ -90,7 +116,7 @@ const Design = () => {
             navigate("/report");
           }}
         >
-          Next
+          {isEdit ? "save" : "Next"}
         </Button>
       </div>
     </div>

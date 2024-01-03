@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import style from "../Description.module.css";
 import { Button, Card, CircularProgress, IconButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import Edit from "../../../../Assets/Image/Edit.svg";
 import axios from "axios";
 import { API_URL } from "../../../../utils";
 import {
@@ -14,6 +15,8 @@ import copy from "../../../../Assets/Image/copy.svg";
 export default function Description() {
   const [discription, setDiscription] = useState("");
   const data = useSelector((state) => state?.form);
+  const [isEdit, setIsEdit] = useState(false);
+  const [esitContent, setEditContent] = useState([]);
   const dispatch = useDispatch();
 
   const hendleGanrate = () => {
@@ -33,6 +36,7 @@ export default function Description() {
     navigator.clipboard.writeText(data?.description?.project_goals);
   }
 
+  console.log(esitContent);
   return (
     <div className={`card ${style.cardStyle}`}>
       <label>
@@ -57,16 +61,40 @@ export default function Description() {
               <h5 className="text-center">
                 {data?.description?.project_name}: Original Requirements
               </h5>
-              <IconButton
-                onClick={() => {
-                  triggerExample();
-                }}
-              >
-                <img src={copy} alt="img" />
-              </IconButton>
+              <div>
+                <IconButton
+                  onClick={() => {
+                    setIsEdit(!isEdit);
+                    setEditContent(
+                      esitContent.length > 0
+                        ? ""
+                        : data?.description?.project_goals
+                    );
+                  }}
+                >
+                  <img src={Edit} alt="img" />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    triggerExample();
+                  }}
+                >
+                  <img src={copy} alt="img" />
+                </IconButton>
+              </div>
             </div>
             {data?.description?.project_goals?.map((val, i) => {
-              return (
+              return isEdit ? (
+                i > 1 ? (
+                  <textarea
+                    className={`form-control ${style.textAriaStyle} mb-5`}
+                    value={esitContent}
+                    onChange={(e) => {
+                      setEditContent(e.target.value);
+                    }}
+                  />
+                ) : null
+              ) : (
                 <p>
                   {i + 1}. {val}
                 </p>
@@ -111,7 +139,7 @@ export default function Description() {
             }
           }}
         >
-          Next
+          {isEdit ? "save" : "Next"}
         </Button>
       </div>
     </div>

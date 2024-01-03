@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../../../../utils";
 import {
@@ -7,12 +7,16 @@ import {
   changeStap,
   loeading,
 } from "../../../../Redux/Slice/FormSlice";
-import { Button, CircularProgress } from "@mui/material";
+import { Button, Card, CircularProgress, IconButton } from "@mui/material";
 import style from "../Description.module.css";
+import Edit from "../../../../Assets/Image/Edit.svg";
+import copy from "../../../../Assets/Image/copy.svg";
 
 const CompetitiveQuadrandChart = () => {
   const data = useSelector((state) => state?.form);
   const dispatch = useDispatch();
+  const [isEdit, setIsEdit] = useState(false);
+  const [esitContent, setEditContent] = useState("");
 
   const hendleGanrate = () => {
     dispatch(loeading(true));
@@ -33,6 +37,13 @@ const CompetitiveQuadrandChart = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function triggerExample() {
+    navigator.clipboard.writeText(
+      data?.description?.competitive_quadrand_chart
+    );
+  }
+
   return (
     <div>
       {data.loeading ? (
@@ -40,15 +51,46 @@ const CompetitiveQuadrandChart = () => {
           <CircularProgress color="inherit" />
         </div>
       ) : (
-        <>
-          <h5 className="text-center">
-            {data?.description?.project_name}: Competitive Quadrand Chart
-          </h5>
-          <p>{data?.description?.competitive_quadrand_chart}</p>
-          {/* {data?.CompetitiveAnalysis?.competitive_analysis?.map((val, i) => {
-            return <p>{val}</p>;
-          })} */}
-        </>
+        <Card sx={{ padding: 2 }}>
+          <div className={style.copy}>
+            <h5 className="text-center">
+              {data?.description?.project_name}: Competitive Quadrand Chart
+            </h5>
+            <div>
+              <IconButton
+                onClick={() => {
+                  setIsEdit(!isEdit);
+                  setEditContent(
+                    esitContent
+                      ? ""
+                      : data?.description?.competitive_quadrand_chart
+                  );
+                }}
+              >
+                <img src={Edit} alt="img" />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  triggerExample();
+                }}
+              >
+                <img src={copy} alt="img" />
+              </IconButton>
+            </div>
+          </div>
+
+          {isEdit ? (
+            <textarea
+              className={`form-control ${style.textAriaStyle} mb-5`}
+              value={esitContent}
+              onChange={(e) => {
+                setEditContent(e.target.value);
+              }}
+            />
+          ) : (
+            data?.description?.competitive_quadrand_chart
+          )}
+        </Card>
       )}
       <div className={style.buttonFlex}>
         {data?.description?.competitive_quadrand_chart ? (
@@ -81,7 +123,7 @@ const CompetitiveQuadrandChart = () => {
             dispatch(changeStap(4));
           }}
         >
-          Next
+          {isEdit ? "save" : "Next"}
         </Button>
       </div>
     </div>

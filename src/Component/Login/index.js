@@ -72,7 +72,8 @@ export default function Login() {
         <br />
 
         <button
-          className="btn btn-primary"
+          className="btn"
+          style={{ backgroundColor: "#1034a6", color: "white" }}
           disabled={loader}
           onClick={() => {
             hendleuserLogin();
@@ -92,14 +93,14 @@ export default function Login() {
             "Login"
           )}
         </button>
-        <button
+        {/* <button
           className={`${style.Registration}`}
           onClick={() => {
             navigation("/Registration");
           }}
         >
           Registration
-        </button>
+        </button> */}
       </div>
     </div>
   );

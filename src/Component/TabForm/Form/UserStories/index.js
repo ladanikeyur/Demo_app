@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../../../../utils";
+import Edit from "../../../../Assets/Image/Edit.svg";
 import {
   addDescription,
   changeStap,
@@ -13,6 +14,8 @@ import copy from "../../../../Assets/Image/copy.svg";
 
 const UserStories = () => {
   const data = useSelector((state) => state?.form);
+  const [isEdit, setIsEdit] = useState(false);
+  const [esitContent, setEditContent] = useState([]);
   const dispatch = useDispatch();
 
   const hendleGanrate = () => {
@@ -53,16 +56,41 @@ const UserStories = () => {
                 <h5 className="text-center">
                   <b>{data?.description?.project_name}: User Stories</b>
                 </h5>
-                <IconButton
-                  onClick={() => {
-                    triggerExample();
-                  }}
-                >
-                  <img src={copy} alt="img" />
-                </IconButton>
+                <div>
+                  <IconButton
+                    onClick={() => {
+                      setIsEdit(!isEdit);
+                      setEditContent(
+                        esitContent.length > 0
+                          ? ""
+                          : data?.description?.user_stories
+                      );
+                    }}
+                  >
+                    <img src={Edit} alt="img" />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      triggerExample();
+                    }}
+                  >
+                    <img src={copy} alt="img" />
+                  </IconButton>
+                </div>
               </div>
+
               {data?.description?.user_stories?.map((val, i) => {
-                return (
+                return isEdit ? (
+                  i < 1 ? (
+                    <textarea
+                      className={`form-control ${style.textAriaStyle} mb-5`}
+                      value={esitContent}
+                      onChange={(e) => {
+                        setEditContent(e.target.value);
+                      }}
+                    />
+                  ) : null
+                ) : (
                   <p>
                     {i + 1}. {val}
                   </p>
@@ -98,7 +126,7 @@ const UserStories = () => {
             dispatch(changeStap(2));
           }}
         >
-          Next
+          {isEdit ? "save" : "Next"}
         </Button>
       </div>
     </div>
