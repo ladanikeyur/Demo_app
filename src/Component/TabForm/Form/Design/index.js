@@ -14,13 +14,31 @@ const Design = () => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState("");
+  const projectId = localStorage.getItem("projectid");
+
   const navigate = useNavigate();
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
-      .post(`${API_URL}projects/discuss/${data?.description?.id}/7`)
+      .post(`${API_URL}projects/discuss/${projectId}/7`)
       .then((res) => {
         dispatch(addDescription(res?.data));
+        dispatch(loeading(false));
+      })
+      .catch((err) => {
+        dispatch(loeading(false));
+      });
+  };
+
+  const onHeandleEdit = () => {
+    dispatch(loeading(true));
+    axios
+      .patch(`${API_URL}projects/edit/${projectId}/`, {
+        ui_design_draft: esitContent,
+      })
+      .then((res) => {
+        dispatch(addDescription(res?.data));
+        setIsEdit(false);
         dispatch(loeading(false));
       })
       .catch((err) => {
@@ -55,9 +73,7 @@ const Design = () => {
               <IconButton
                 onClick={() => {
                   setIsEdit(!isEdit);
-                  setEditContent(
-                    esitContent ? "" : data?.description?.ui_design_draft
-                  );
+                  setEditContent(data?.description?.ui_design_draft);
                 }}
               >
                 <img src={Edit} alt="img" />
@@ -113,7 +129,11 @@ const Design = () => {
           }}
           color="primary"
           onClick={() => {
-            navigate("/report");
+            if (isEdit) {
+              onHeandleEdit();
+            } else {
+              navigate("/report");
+            }
           }}
         >
           {isEdit ? "save" : "View Document"}

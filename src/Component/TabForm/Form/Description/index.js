@@ -15,6 +15,7 @@ import copy from "../../../../Assets/Image/copy.svg";
 export default function Description() {
   const [discription, setDiscription] = useState("");
   const data = useSelector((state) => state?.form);
+  const projectId = localStorage.getItem("projectid");
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState([]);
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export default function Description() {
     axios
       .post(`${API_URL}projects/start`, { original_requirements: discription })
       .then((res) => {
+        localStorage.setItem("projectid", res?.data?.id);
         dispatch(addDescription(res?.data));
         dispatch(loeading(false));
       })
@@ -36,7 +38,24 @@ export default function Description() {
     navigator.clipboard.writeText(data?.description?.project_goals);
   }
 
-  console.log(esitContent);
+  const onHeandleEdit = () => {
+    dispatch(loeading(true));
+    localStorage.setItem("projectid", data?.description?.id);
+    axios
+      .patch(`${API_URL}projects/edit/${data?.description?.id}/`, {
+        project_goals: [esitContent],
+      })
+      .then((res) => {
+        dispatch(addDescription(res?.data));
+        setIsEdit(false);
+        dispatch(loeading(false));
+      })
+      .catch((err) => {
+        dispatch(loeading(false));
+      });
+  };
+
+  console.log(data?.description?.id);
   return (
     <div className={`card ${style.cardStyle}`}>
       <label>
@@ -65,11 +84,7 @@ export default function Description() {
                 <IconButton
                   onClick={() => {
                     setIsEdit(!isEdit);
-                    setEditContent(
-                      esitContent.length > 0
-                        ? ""
-                        : data?.description?.project_goals
-                    );
+                    setEditContent(data?.description?.project_goals);
                   }}
                 >
                   <img src={Edit} alt="img" />
@@ -85,7 +100,7 @@ export default function Description() {
             </div>
             {data?.description?.project_goals?.map((val, i) => {
               return isEdit ? (
-                i > 1 ? (
+                i === 0 ? (
                   <textarea
                     className={`form-control ${style.textAriaStyle} mb-5`}
                     value={esitContent}
@@ -132,10 +147,14 @@ export default function Description() {
           }}
           color="primary"
           onClick={() => {
-            if (data?.description?.id) {
-              dispatch(changeStap(1));
+            if (isEdit) {
+              onHeandleEdit();
             } else {
-              hendleGanrate();
+              if (projectId) {
+                dispatch(changeStap(1));
+              } else {
+                hendleGanrate();
+              }
             }
           }}
         >

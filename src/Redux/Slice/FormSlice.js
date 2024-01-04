@@ -2,12 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const state = {
   description: {},
-  stories: {},
-  CompetitiveAnalysis: {},
-  CompetitiveQuadrandChart: {},
-  RequirementAnalysis: {},
-  RequirementPool: {},
-  design: {},
   formStap: 0,
   loeading: false,
 };
@@ -24,11 +18,15 @@ export const formSlice = createSlice({
     addDescription: (state, action) => {
       state.description = action.payload;
     },
+    removeDescription: (state, action) => {
+      state.description = {};
+    },
   },
 });
 
 // this is for dispatch
-export const { addDescription, changeStap, loeading } = formSlice.actions;
+export const { addDescription, changeStap, loeading, removeDescription } =
+  formSlice.actions;
 
 // this is for configureStore
 export default formSlice.reducer;

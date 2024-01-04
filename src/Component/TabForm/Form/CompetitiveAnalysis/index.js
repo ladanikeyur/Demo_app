@@ -17,11 +17,12 @@ const CompetitiveAnalysis = () => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState([]);
+  const projectId = localStorage.getItem("projectid");
 
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
-      .post(`${API_URL}projects/discuss/${data?.description?.id}/3`)
+      .post(`${API_URL}projects/discuss/${projectId}/3`)
       .then((res) => {
         dispatch(addDescription(res?.data));
         dispatch(loeading(false));
@@ -37,6 +38,23 @@ const CompetitiveAnalysis = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onHeandleEdit = () => {
+    dispatch(loeading(true));
+    axios
+      .patch(`${API_URL}projects/edit/${projectId}/`, {
+        competitive_analysis: [esitContent],
+      })
+      .then((res) => {
+        dispatch(addDescription(res?.data));
+        // setEditContent(...data?.description?.user_stories);
+        setIsEdit(false);
+        dispatch(loeading(false));
+      })
+      .catch((err) => {
+        dispatch(loeading(false));
+      });
+  };
 
   function triggerExample() {
     navigator.clipboard.writeText(data?.description?.competitive_analysis);
@@ -58,11 +76,7 @@ const CompetitiveAnalysis = () => {
               <IconButton
                 onClick={() => {
                   setIsEdit(!isEdit);
-                  setEditContent(
-                    esitContent.length > 0
-                      ? ""
-                      : data?.description?.competitive_analysis
-                  );
+                  setEditContent(data?.description?.competitive_analysis);
                 }}
               >
                 <img src={Edit} alt="img" />
@@ -79,7 +93,7 @@ const CompetitiveAnalysis = () => {
 
           {data?.description?.competitive_analysis?.map((val, i) => {
             return isEdit ? (
-              i > 1 ? (
+              i === 0 ? (
                 <textarea
                   className={`form-control ${style.textAriaStyle} mb-5`}
                   value={esitContent}
@@ -124,7 +138,11 @@ const CompetitiveAnalysis = () => {
           }}
           color="primary"
           onClick={() => {
-            dispatch(changeStap(3));
+            if (isEdit) {
+              onHeandleEdit();
+            } else {
+              dispatch(changeStap(3));
+            }
           }}
         >
           {isEdit ? "save" : "Next"}

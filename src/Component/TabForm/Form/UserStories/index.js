@@ -14,6 +14,7 @@ import copy from "../../../../Assets/Image/copy.svg";
 
 const UserStories = () => {
   const data = useSelector((state) => state?.form);
+  const projectId = localStorage.getItem("projectid");
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState([]);
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const UserStories = () => {
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
-      .post(`${API_URL}projects/discuss/${data?.description?.id}/2`)
+      .post(`${API_URL}projects/discuss/${projectId}/2`)
       .then((res) => {
         dispatch(addDescription(res?.data));
         dispatch(loeading(false));
@@ -37,6 +38,23 @@ const UserStories = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onHeandleEdit = () => {
+    dispatch(loeading(true));
+    axios
+      .patch(`${API_URL}projects/edit/${projectId}/`, {
+        user_stories: [esitContent],
+      })
+      .then((res) => {
+        dispatch(addDescription(res?.data));
+        // setEditContent(...data?.description?.user_stories);
+        setIsEdit(false);
+        dispatch(loeading(false));
+      })
+      .catch((err) => {
+        dispatch(loeading(false));
+      });
+  };
 
   function triggerExample() {
     navigator.clipboard.writeText(data?.description?.user_stories);
@@ -60,11 +78,7 @@ const UserStories = () => {
                   <IconButton
                     onClick={() => {
                       setIsEdit(!isEdit);
-                      setEditContent(
-                        esitContent.length > 0
-                          ? ""
-                          : data?.description?.user_stories
-                      );
+                      setEditContent(data?.description?.user_stories);
                     }}
                   >
                     <img src={Edit} alt="img" />
@@ -81,7 +95,7 @@ const UserStories = () => {
 
               {data?.description?.user_stories?.map((val, i) => {
                 return isEdit ? (
-                  i < 1 ? (
+                  i === 0 ? (
                     <textarea
                       className={`form-control ${style.textAriaStyle} mb-5`}
                       value={esitContent}
@@ -123,7 +137,11 @@ const UserStories = () => {
           }}
           color="primary"
           onClick={() => {
-            dispatch(changeStap(2));
+            if (isEdit) {
+              onHeandleEdit();
+            } else {
+              dispatch(changeStap(2));
+            }
           }}
         >
           {isEdit ? "save" : "Next"}

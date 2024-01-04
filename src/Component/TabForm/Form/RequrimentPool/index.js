@@ -16,11 +16,13 @@ const RequirementPool = () => {
   const data = useSelector((state) => state?.form);
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState([]);
+  const projectId = localStorage.getItem("projectid");
   const dispatch = useDispatch();
+
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
-      .post(`${API_URL}projects/discuss/${data?.description?.id}/6`)
+      .post(`${API_URL}projects/discuss/${projectId}/6`)
       .then((res) => {
         dispatch(addDescription(res?.data));
         dispatch(loeading(false));

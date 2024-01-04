@@ -17,11 +17,12 @@ const RequirementAnalysis = () => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState("");
+  const projectId = localStorage.getItem("projectid");
 
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
-      .post(`${API_URL}projects/discuss/${data?.description?.id}/5`)
+      .post(`${API_URL}projects/discuss/${projectId}/5`)
       .then((res) => {
         dispatch(addDescription(res?.data));
         dispatch(loeading(false));
@@ -37,6 +38,23 @@ const RequirementAnalysis = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onHeandleEdit = () => {
+    dispatch(loeading(true));
+    axios
+      .patch(`${API_URL}projects/edit/${projectId}/`, {
+        requirement_analysis: esitContent,
+      })
+      .then((res) => {
+        dispatch(addDescription(res?.data));
+        // setEditContent(...data?.description?.user_stories);
+        setIsEdit(false);
+        dispatch(loeading(false));
+      })
+      .catch((err) => {
+        dispatch(loeading(false));
+      });
+  };
 
   function triggerExample() {
     navigator.clipboard.writeText(data?.description?.user_stories);
@@ -58,9 +76,7 @@ const RequirementAnalysis = () => {
               <IconButton
                 onClick={() => {
                   setIsEdit(!isEdit);
-                  setEditContent(
-                    esitContent ? "" : data?.description?.requirement_analysis
-                  );
+                  setEditContent(data?.description?.requirement_analysis);
                 }}
               >
                 <img src={Edit} alt="img" />
@@ -112,7 +128,11 @@ const RequirementAnalysis = () => {
           }}
           color="primary"
           onClick={() => {
-            dispatch(changeStap(5));
+            if (isEdit) {
+              onHeandleEdit();
+            } else {
+              dispatch(changeStap(5));
+            }
           }}
         >
           {isEdit ? "save" : "Next"}
