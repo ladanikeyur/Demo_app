@@ -92,7 +92,11 @@ export default function FullWidthTabs() {
         >
           <Tabs
             value={form?.formStap}
-            onChange={handleChange}
+            onChange={(e, index) => {
+              if (form?.formStap > index) {
+                handleChange(e, index);
+              }
+            }}
             indicatorColor="light"
             textColor="inherit"
             variant="scrollable"

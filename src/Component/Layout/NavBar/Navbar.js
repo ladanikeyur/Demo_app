@@ -51,7 +51,7 @@ const Navbar = ({ onClickMenu, sideBar }) => {
           }}
         >
           <img
-            src="https://img.freepik.com/free-photo/young-woman-with-round-glasses-yellow-sweater_273609-7091.jpg?w=740&t=st=1704289925~exp=1704290525~hmac=ca4fbd424c864b8eeccf13e9cc1e508ea4d06ca1635bdf0122a1b19c46203376"
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
             alt="img"
             width={35}
             height={35}

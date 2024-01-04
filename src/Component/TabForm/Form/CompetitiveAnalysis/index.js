@@ -97,7 +97,7 @@ const CompetitiveAnalysis = () => {
         </Card>
       ) : null}
       <div className={style.buttonFlex}>
-        {data?.description?.competitive_analysis ? (
+        {data?.description?.competitive_analysis && !isEdit ? (
           <Button
             variant="contained"
             sx={{

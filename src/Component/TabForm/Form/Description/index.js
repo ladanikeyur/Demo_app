@@ -104,7 +104,7 @@ export default function Description() {
         ) : null}
       </div>
       <div className={style.buttonFlex}>
-        {data?.description?.project_goals ? (
+        {data?.description?.project_goals && !isEdit ? (
           <Button
             variant="contained"
             sx={{

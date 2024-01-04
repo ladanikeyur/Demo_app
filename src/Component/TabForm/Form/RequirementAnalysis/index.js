@@ -89,7 +89,7 @@ const RequirementAnalysis = () => {
         </Card>
       ) : null}
       <div className={style.buttonFlex}>
-        {data?.description?.requirement_analysis ? (
+        {data?.description?.requirement_analysis && !isEdit ? (
           <Button
             variant="contained"
             sx={{ textTransform: "initial", backgroundColor: "#343a40" }}

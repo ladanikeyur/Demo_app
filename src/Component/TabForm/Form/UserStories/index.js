@@ -101,7 +101,7 @@ const UserStories = () => {
         </div>
       </div>
       <div className={style.buttonFlex}>
-        {data?.description?.user_stories ? (
+        {data?.description?.user_stories && !isEdit ? (
           <Button
             variant="contained"
             sx={{ textTransform: "initial", backgroundColor: "#343a40" }}

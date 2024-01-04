@@ -51,7 +51,7 @@ const Database = () => {
         </>
       )}
       <div className={style.buttonFlex}>
-        {data?.description?.ui_design_draft ? (
+        {data?.description?.ui_design_draft && !isEdit ? (
           <Button
             variant="contained"
             sx={{

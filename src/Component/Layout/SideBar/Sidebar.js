@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Sidebar({ sideBar }) {
   const navigate = useNavigate();
+  const key = localStorage.getItem("key");
   return (
     <div className={sideBar ? style.mainSidebar : style.mainSidebarClose}>
       <img
@@ -23,9 +24,11 @@ export default function Sidebar({ sideBar }) {
         >
           <span className={style.menuLabel}>Studio</span>
         </div>
-        <div className={style.SidbarMenuItem}>
-          <span className={style.menuLabel}>My Projects</span>
-        </div>
+        {key ? (
+          <div className={style.SidbarMenuItem}>
+            <span className={style.menuLabel}>My Projects</span>
+          </div>
+        ) : null}
 
         <div className={style.SidbarMenuItem}>
           <span className={style.menuLabel}>Build Team</span>
@@ -47,7 +50,13 @@ export default function Sidebar({ sideBar }) {
         <div className={style.SidbarMenuItem}>
           <span className={style.menuLabel}>Setting</span>
         </div>
-        <div className={style.SidbarMenuItem}>
+        <div
+          className={style.SidbarMenuItem}
+          onClick={() => {
+            localStorage.clear();
+            navigate("/login");
+          }}
+        >
           <span className={style.menuLabel}>Logout</span>
         </div>
       </div>

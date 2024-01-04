@@ -93,7 +93,7 @@ const CompetitiveQuadrandChart = () => {
         </Card>
       )}
       <div className={style.buttonFlex}>
-        {data?.description?.competitive_quadrand_chart ? (
+        {data?.description?.competitive_quadrand_chart && !isEdit ? (
           <Button
             variant="contained"
             sx={{

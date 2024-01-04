@@ -13,7 +13,7 @@ const Design = () => {
   const data = useSelector((state) => state?.form);
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
-  const [esitContent, setEditContent] = useState([]);
+  const [esitContent, setEditContent] = useState("");
   const navigate = useNavigate();
   const hendleGanrate = () => {
     dispatch(loeading(true));
@@ -86,7 +86,7 @@ const Design = () => {
         </Card>
       ) : null}
       <div className={style.buttonFlex}>
-        {data?.description?.ui_design_draft ? (
+        {data?.description?.ui_design_draft && !isEdit ? (
           <Button
             variant="contained"
             sx={{
@@ -116,7 +116,7 @@ const Design = () => {
             navigate("/report");
           }}
         >
-          {isEdit ? "save" : "Next"}
+          {isEdit ? "save" : "View Document"}
         </Button>
       </div>
     </div>
