@@ -2,12 +2,14 @@
   width: 25%;
   background-color: #1034a6;
   transition: all 0.5s;
+  position: relative;
 }
 
 .mainSidebarClose {
   width: 0%;
   background-color: #1034a6;
   transition: all 0.5s;
+  position: relative;
 }
 
 .sidebarMenu {
@@ -24,4 +26,43 @@
 .menuLabel {
   font-weight: 600;
   font-size: 14px;
+}
+
+.contactMenu {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 5%;
+  width: 95%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.socialIcon {
+  background-color: #1034a6;
+  padding: 10px;
+  border: none;
+  border-radius: 100px;
+}
+
+.BookDemo {
+  background-color: #e33530;
+  border-radius: 40px;
+  padding: 10px;
+  border: none;
+  font-weight: 600;
+  color: white;
+  width: 90%;
+  margin: auto;
+  display: block;
+}
+
+.bottomBox {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
 }

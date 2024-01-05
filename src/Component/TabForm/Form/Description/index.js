@@ -17,13 +17,24 @@ export default function Description() {
   const data = useSelector((state) => state?.form);
   const projectId = localStorage.getItem("projectid");
   const [isEdit, setIsEdit] = useState(false);
+  const token = localStorage.getItem("key");
   const [esitContent, setEditContent] = useState([]);
   const dispatch = useDispatch();
 
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
-      .post(`${API_URL}projects/start`, { original_requirements: discription })
+      .post(
+        `${API_URL}projects/start`,
+        {
+          original_requirements: discription,
+        },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      )
       .then((res) => {
         localStorage.setItem("projectid", res?.data?.id);
         dispatch(addDescription(res?.data));
@@ -42,9 +53,17 @@ export default function Description() {
     dispatch(loeading(true));
     localStorage.setItem("projectid", data?.description?.id);
     axios
-      .patch(`${API_URL}projects/edit/${data?.description?.id}/`, {
-        project_goals: [esitContent],
-      })
+      .patch(
+        `${API_URL}projects/edit/${data?.description?.id}/`,
+        {
+          project_goals: esitContent,
+        },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      )
       .then((res) => {
         dispatch(addDescription(res?.data));
         setIsEdit(false);
@@ -55,7 +74,6 @@ export default function Description() {
       });
   };
 
-  console.log(data?.description?.id);
   return (
     <div className={`card ${style.cardStyle}`}>
       <label>
@@ -98,23 +116,20 @@ export default function Description() {
                 </IconButton>
               </div>
             </div>
-            {data?.description?.project_goals?.map((val, i) => {
-              return isEdit ? (
-                i === 0 ? (
-                  <textarea
-                    className={`form-control ${style.textAriaStyle} mb-5`}
-                    value={esitContent}
-                    onChange={(e) => {
-                      setEditContent(e.target.value);
-                    }}
-                  />
-                ) : null
-              ) : (
-                <p>
-                  {i + 1}. {val}
-                </p>
-              );
-            })}
+            {isEdit ? (
+              <textarea
+                className={`form-control ${style.textAriaStyle} mb-5`}
+                value={esitContent}
+                onChange={(e) => {
+                  setEditContent(e.target.value);
+                }}
+              />
+            ) : (
+              <p>{data?.description?.project_goals}</p>
+            )}
+            {/* {data?.description?.project_goals?.map((val, i) => {
+              return 
+            })} */}
           </Card>
         ) : null}
       </div>

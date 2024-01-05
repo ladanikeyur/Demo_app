@@ -18,6 +18,7 @@ const RequirementAnalysis = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState("");
   const projectId = localStorage.getItem("projectid");
+  const token = localStorage.getItem("key");
 
   const hendleGanrate = () => {
     dispatch(loeading(true));
@@ -42,9 +43,17 @@ const RequirementAnalysis = () => {
   const onHeandleEdit = () => {
     dispatch(loeading(true));
     axios
-      .patch(`${API_URL}projects/edit/${projectId}/`, {
-        requirement_analysis: esitContent,
-      })
+      .patch(
+        `${API_URL}projects/edit/${projectId}/`,
+        {
+          requirement_analysis: esitContent,
+        },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      )
       .then((res) => {
         dispatch(addDescription(res?.data));
         // setEditContent(...data?.description?.user_stories);

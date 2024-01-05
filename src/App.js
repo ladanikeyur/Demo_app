@@ -8,6 +8,8 @@ import "./App.css";
 import Navbar from "./Component/Layout/NavBar/Navbar";
 import Report from "./Component/Reaport";
 import Sidebar from "./Component/Layout/SideBar/Sidebar";
+import MyProject from "./Component/MyProject";
+import MyProfile from "./Component/MyProfile";
 
 function App() {
   const key = localStorage.getItem("key");
@@ -41,6 +43,8 @@ function App() {
             </Route>
             <Route path="/report" element={<Outlet />}>
               <Route index element={<Report />} />
+              <Route path="myproject" element={<MyProject />} />
+              <Route path="myprofile" element={<MyProfile />} />
             </Route>
             <Route path="*" element={<h1>404</h1>} />
           </Routes>

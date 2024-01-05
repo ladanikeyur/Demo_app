@@ -8,7 +8,11 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
-import { changeStap } from "../../Redux/Slice/FormSlice";
+import {
+  addDescription,
+  changeStap,
+  loeading,
+} from "../../Redux/Slice/FormSlice";
 import Description from "./Form/Description";
 import UserStories from "./Form/UserStories";
 import CompetitiveAnalysis from "./Form/CompetitiveAnalysis";
@@ -16,6 +20,9 @@ import CompetitiveQuadrandChart from "./Form/CompetitiveQuadrandChart";
 import RequirementAnalysis from "./Form/RequirementAnalysis";
 import RequirementPool from "./Form/RequrimentPool";
 import Design from "./Form/Design";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "../../utils";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,6 +61,9 @@ export default function FullWidthTabs() {
   const theme = useTheme();
   const form = useSelector((state) => state.form);
   const dispatch = useDispatch();
+  const token = localStorage.getItem("key");
+  const location = useLocation();
+
   const handleChange = (event, newValue) => {
     dispatch(changeStap(newValue));
   };
@@ -61,6 +71,25 @@ export default function FullWidthTabs() {
   const handleChangeIndex = (index) => {
     dispatch(changeStap(index));
   };
+
+  React.useEffect(() => {
+    dispatch(addDescription({}));
+    if (location?.state?.projectId) {
+      dispatch(loeading(true));
+      axios
+        .get(`${API_URL}projects/${location?.state?.projectId}`, {
+          headers: { Authorization: `Token ${token}` },
+        })
+        .then((res) => {
+          dispatch(addDescription(res?.data));
+          dispatch(loeading(false));
+        })
+        .catch((err) => {
+          dispatch(loeading(false));
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location?.state?.projectId]);
 
   return (
     <>

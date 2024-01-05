@@ -18,6 +18,7 @@ const UserStories = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState([]);
   const dispatch = useDispatch();
+  const token = localStorage.getItem("key");
 
   const hendleGanrate = () => {
     dispatch(loeading(true));
@@ -42,9 +43,17 @@ const UserStories = () => {
   const onHeandleEdit = () => {
     dispatch(loeading(true));
     axios
-      .patch(`${API_URL}projects/edit/${projectId}/`, {
-        user_stories: [esitContent],
-      })
+      .patch(
+        `${API_URL}projects/edit/${projectId}/`,
+        {
+          user_stories: esitContent,
+        },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      )
       .then((res) => {
         dispatch(addDescription(res?.data));
         // setEditContent(...data?.description?.user_stories);
@@ -92,24 +101,17 @@ const UserStories = () => {
                   </IconButton>
                 </div>
               </div>
-
-              {data?.description?.user_stories?.map((val, i) => {
-                return isEdit ? (
-                  i === 0 ? (
-                    <textarea
-                      className={`form-control ${style.textAriaStyle} mb-5`}
-                      value={esitContent}
-                      onChange={(e) => {
-                        setEditContent(e.target.value);
-                      }}
-                    />
-                  ) : null
-                ) : (
-                  <p>
-                    {i + 1}. {val}
-                  </p>
-                );
-              })}
+              {isEdit ? (
+                <textarea
+                  className={`form-control ${style.textAriaStyle} mb-5`}
+                  value={esitContent}
+                  onChange={(e) => {
+                    setEditContent(e.target.value);
+                  }}
+                />
+              ) : (
+                <p>{data?.description?.user_stories}</p>
+              )}
             </Card>
           ) : null}
         </div>

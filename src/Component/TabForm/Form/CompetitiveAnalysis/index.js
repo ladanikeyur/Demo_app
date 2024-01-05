@@ -18,7 +18,7 @@ const CompetitiveAnalysis = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState([]);
   const projectId = localStorage.getItem("projectid");
-
+  const token = localStorage.getItem("key");
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
@@ -42,9 +42,17 @@ const CompetitiveAnalysis = () => {
   const onHeandleEdit = () => {
     dispatch(loeading(true));
     axios
-      .patch(`${API_URL}projects/edit/${projectId}/`, {
-        competitive_analysis: [esitContent],
-      })
+      .patch(
+        `${API_URL}projects/edit/${projectId}/`,
+        {
+          competitive_analysis: esitContent,
+        },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      )
       .then((res) => {
         dispatch(addDescription(res?.data));
         // setEditContent(...data?.description?.user_stories);
@@ -90,24 +98,17 @@ const CompetitiveAnalysis = () => {
               </IconButton>
             </div>
           </div>
-
-          {data?.description?.competitive_analysis?.map((val, i) => {
-            return isEdit ? (
-              i === 0 ? (
-                <textarea
-                  className={`form-control ${style.textAriaStyle} mb-5`}
-                  value={esitContent}
-                  onChange={(e) => {
-                    setEditContent(e.target.value);
-                  }}
-                />
-              ) : null
-            ) : (
-              <p>
-                {i + 1}. {val}
-              </p>
-            );
-          })}
+          {isEdit ? (
+            <textarea
+              className={`form-control ${style.textAriaStyle} mb-5`}
+              value={esitContent}
+              onChange={(e) => {
+                setEditContent(e.target.value);
+              }}
+            />
+          ) : (
+            <p>{data?.description?.competitive_analysis}</p>
+          )}
         </Card>
       ) : null}
       <div className={style.buttonFlex}>

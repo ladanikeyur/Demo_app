@@ -15,6 +15,7 @@ const Design = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState("");
   const projectId = localStorage.getItem("projectid");
+  const token = localStorage.getItem("key");
 
   const navigate = useNavigate();
   const hendleGanrate = () => {
@@ -33,9 +34,17 @@ const Design = () => {
   const onHeandleEdit = () => {
     dispatch(loeading(true));
     axios
-      .patch(`${API_URL}projects/edit/${projectId}/`, {
-        ui_design_draft: esitContent,
-      })
+      .patch(
+        `${API_URL}projects/edit/${projectId}/`,
+        {
+          ui_design_draft: esitContent,
+        },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      )
       .then((res) => {
         dispatch(addDescription(res?.data));
         setIsEdit(false);

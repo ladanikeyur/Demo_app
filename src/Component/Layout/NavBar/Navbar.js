@@ -29,45 +29,46 @@ const Navbar = ({ onClickMenu, sideBar }) => {
       >
         <img src={toggle} alt="toggle" />
       </IconButton>
-
-      {key ? (
-        <Button
-          id="fade-button"
-          sx={{
-            backgroundColor: "transparent",
-            ":hover": {
+      <div>
+        {key ? (
+          <Button
+            id="fade-button"
+            sx={{
               backgroundColor: "transparent",
-            },
-            borderRadius: "100%",
-            width: 35,
-            height: 35,
-            padding: 0,
-          }}
-          aria-controls={open ? "fade-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={(e) => {
-            handleClick(e);
-          }}
-        >
-          <img
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-            alt="img"
-            width={35}
-            height={35}
-            className={style.ProfileImage}
-          />
-        </Button>
-      ) : (
-        <button
-          className={`btn btn-light ${style.loginButton}`}
-          onClick={() => {
-            navigate("/login");
-          }}
-        >
-          Login
-        </button>
-      )}
+              ":hover": {
+                backgroundColor: "transparent",
+              },
+              borderRadius: "100%",
+              width: 35,
+              height: 35,
+              padding: 0,
+            }}
+            aria-controls={open ? "fade-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={(e) => {
+              handleClick(e);
+            }}
+          >
+            <img
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              alt="img"
+              width={35}
+              height={35}
+              className={style.ProfileImage}
+            />
+          </Button>
+        ) : (
+          <button
+            className={`btn btn-light ${style.loginButton}`}
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            Login
+          </button>
+        )}
+      </div>
 
       <Menu
         id="fade-menu"
@@ -83,6 +84,7 @@ const Navbar = ({ onClickMenu, sideBar }) => {
       >
         <MenuItem
           onClick={() => {
+            navigate("/report/myproject");
             handleClose();
           }}
         >
@@ -98,6 +100,7 @@ const Navbar = ({ onClickMenu, sideBar }) => {
         >
           {key ? "Logout" : "Login"}
         </MenuItem>
+
         {/* <MenuItem
           onClick={() => {
             navigate("/");
