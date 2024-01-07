@@ -10,16 +10,16 @@ import {
 import { Button, Card, CircularProgress, IconButton } from "@mui/material";
 import style from "../Description.module.css";
 import copy from "../../../../Assets/Image/copy.svg";
+import QuadrantChart from "../QuadrantChart";
 
 const CompetitiveQuadrandChart = () => {
   const data = useSelector((state) => state?.form);
   const dispatch = useDispatch();
-  const projectId = localStorage.getItem("projectid");
 
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
-      .post(`${API_URL}projects/discuss/${projectId}/4`)
+      .post(`${API_URL}projects/discuss/${data?.description?.id}/4`)
       .then((res) => {
         dispatch(addDescription(res?.data));
         dispatch(loeading(false));
@@ -41,6 +41,19 @@ const CompetitiveQuadrandChart = () => {
       data?.description?.competitive_quadrand_chart
     );
   }
+
+  const inputDataString = `{
+    "title": "Feature Richness vs User Experience",
+    "xAxis": "Basic → Feature Rich",
+    "yAxis": "Simple UX → Engaging UX",
+    "quadrants": ["Low Priority Enhancements", "Niche Features", "Must Haves", "Key Differentiators"],
+    "competitors": [
+      {"name": "CompetitorX", "coordinates": [0.8, 0.9]},
+      {"name": "CompetitorY", "coordinates": [0.6, 0.7]},
+      {"name": "ASCII CompetitorZ", "coordinates": [0.9, 0.6]},
+      {"name": "Our Target Product", "coordinates": [0.7, 0.8]}
+    ]
+  }`;
 
   return (
     <div>
@@ -73,7 +86,13 @@ const CompetitiveQuadrandChart = () => {
             </div>
           </div>
 
-          {data?.description?.competitive_quadrand_chart}
+          {data?.description?.competitive_quadrand_chart ? (
+            <QuadrantChart
+              dataString={`${data?.description?.competitive_quadrand_chart}`}
+            />
+          ) : null}
+
+          {/* {data?.description?.competitive_quadrand_chart} */}
         </Card>
       )}
       <div className={style.buttonFlex}>

@@ -21,7 +21,6 @@ const Report = () => {
 
     html2pdf(content, pdfOptions);
 
-    localStorage.removeItem("projectid");
     navigate("/");
     dispatch(removeDescription());
   };

@@ -14,7 +14,6 @@ import copy from "../../../../Assets/Image/copy.svg";
 
 const UserStories = () => {
   const data = useSelector((state) => state?.form);
-  const projectId = localStorage.getItem("projectid");
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState([]);
   const dispatch = useDispatch();
@@ -23,7 +22,7 @@ const UserStories = () => {
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
-      .post(`${API_URL}projects/discuss/${projectId}/2`)
+      .post(`${API_URL}projects/discuss/${data?.description?.id}/2`)
       .then((res) => {
         dispatch(addDescription(res?.data));
         dispatch(loeading(false));
@@ -44,7 +43,7 @@ const UserStories = () => {
     dispatch(loeading(true));
     axios
       .patch(
-        `${API_URL}projects/edit/${projectId}/`,
+        `${API_URL}projects/edit/${data?.description?.id}/`,
         {
           user_stories: esitContent,
         },
@@ -69,6 +68,10 @@ const UserStories = () => {
     navigator.clipboard.writeText(data?.description?.user_stories);
   }
 
+  const UserStories = data?.description?.user_stories?.replace(
+    /\n/g,
+    "<br><br>"
+  );
   return (
     <div>
       <div className={style.buttonFlex}>
@@ -110,7 +113,7 @@ const UserStories = () => {
                   }}
                 />
               ) : (
-                <p>{data?.description?.user_stories}</p>
+                <p dangerouslySetInnerHTML={{ __html: UserStories }} />
               )}
             </Card>
           ) : null}

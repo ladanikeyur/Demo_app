@@ -23,7 +23,6 @@ export default function Sidebar({ sideBar }) {
         <div
           onClick={() => {
             navigate("/");
-            localStorage.removeItem("projectid");
           }}
           className={style.SidbarMenuItem}
         >

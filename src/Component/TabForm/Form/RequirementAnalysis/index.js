@@ -17,13 +17,12 @@ const RequirementAnalysis = () => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState("");
-  const projectId = localStorage.getItem("projectid");
   const token = localStorage.getItem("key");
 
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
-      .post(`${API_URL}projects/discuss/${projectId}/5`)
+      .post(`${API_URL}projects/discuss/${data?.description?.id}/5`)
       .then((res) => {
         dispatch(addDescription(res?.data));
         dispatch(loeading(false));
@@ -44,7 +43,7 @@ const RequirementAnalysis = () => {
     dispatch(loeading(true));
     axios
       .patch(
-        `${API_URL}projects/edit/${projectId}/`,
+        `${API_URL}projects/edit/${data?.description?.id}/`,
         {
           requirement_analysis: esitContent,
         },
@@ -69,6 +68,10 @@ const RequirementAnalysis = () => {
     navigator.clipboard.writeText(data?.description?.user_stories);
   }
 
+  const UserStories = data?.description?.requirement_analysis?.replace(
+    /\n/g,
+    "<br><br>"
+  );
   return (
     <div>
       {data.loeading ? (
@@ -109,7 +112,7 @@ const RequirementAnalysis = () => {
               }}
             />
           ) : (
-            data?.description?.requirement_analysis
+            <p dangerouslySetInnerHTML={{ __html: UserStories }} />
           )}
         </Card>
       ) : null}

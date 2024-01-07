@@ -15,7 +15,6 @@ import copy from "../../../../Assets/Image/copy.svg";
 export default function Description() {
   const [discription, setDiscription] = useState("");
   const data = useSelector((state) => state?.form);
-  const projectId = localStorage.getItem("projectid");
   const [isEdit, setIsEdit] = useState(false);
   const token = localStorage.getItem("key");
   const [esitContent, setEditContent] = useState([]);
@@ -36,7 +35,6 @@ export default function Description() {
         }
       )
       .then((res) => {
-        localStorage.setItem("projectid", res?.data?.id);
         dispatch(addDescription(res?.data));
         dispatch(loeading(false));
       })
@@ -51,7 +49,6 @@ export default function Description() {
 
   const onHeandleEdit = () => {
     dispatch(loeading(true));
-    localStorage.setItem("projectid", data?.description?.id);
     axios
       .patch(
         `${API_URL}projects/edit/${data?.description?.id}/`,
@@ -73,6 +70,11 @@ export default function Description() {
         dispatch(loeading(false));
       });
   };
+
+  const UserStories = data?.description?.project_goals?.replace(
+    /\n/g,
+    "<br><br>"
+  );
 
   return (
     <div className={`card ${style.cardStyle}`}>
@@ -125,7 +127,7 @@ export default function Description() {
                 }}
               />
             ) : (
-              <p>{data?.description?.project_goals}</p>
+              <p dangerouslySetInnerHTML={{ __html: UserStories }} />
             )}
             {/* {data?.description?.project_goals?.map((val, i) => {
               return 
@@ -165,7 +167,7 @@ export default function Description() {
             if (isEdit) {
               onHeandleEdit();
             } else {
-              if (projectId) {
+              if (data?.description?.id) {
                 dispatch(changeStap(1));
               } else {
                 hendleGanrate();

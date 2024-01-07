@@ -17,12 +17,11 @@ const CompetitiveAnalysis = () => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState([]);
-  const projectId = localStorage.getItem("projectid");
   const token = localStorage.getItem("key");
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
-      .post(`${API_URL}projects/discuss/${projectId}/3`)
+      .post(`${API_URL}projects/discuss/${data?.description?.id}/3`)
       .then((res) => {
         dispatch(addDescription(res?.data));
         dispatch(loeading(false));
@@ -43,7 +42,7 @@ const CompetitiveAnalysis = () => {
     dispatch(loeading(true));
     axios
       .patch(
-        `${API_URL}projects/edit/${projectId}/`,
+        `${API_URL}projects/edit/${data?.description?.id}/`,
         {
           competitive_analysis: esitContent,
         },
@@ -67,6 +66,11 @@ const CompetitiveAnalysis = () => {
   function triggerExample() {
     navigator.clipboard.writeText(data?.description?.competitive_analysis);
   }
+
+  const UserStories = data?.description?.competitive_analysis?.replace(
+    /\n/g,
+    "<br><br>"
+  );
 
   return (
     <div>
@@ -107,7 +111,7 @@ const CompetitiveAnalysis = () => {
               }}
             />
           ) : (
-            <p>{data?.description?.competitive_analysis}</p>
+            <p dangerouslySetInnerHTML={{ __html: UserStories }} />
           )}
         </Card>
       ) : null}

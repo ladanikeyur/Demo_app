@@ -14,14 +14,13 @@ const Design = () => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [esitContent, setEditContent] = useState("");
-  const projectId = localStorage.getItem("projectid");
   const token = localStorage.getItem("key");
 
   const navigate = useNavigate();
   const hendleGanrate = () => {
     dispatch(loeading(true));
     axios
-      .post(`${API_URL}projects/discuss/${projectId}/7`)
+      .post(`${API_URL}projects/discuss/${data?.description?.id}/7`)
       .then((res) => {
         dispatch(addDescription(res?.data));
         dispatch(loeading(false));
@@ -35,7 +34,7 @@ const Design = () => {
     dispatch(loeading(true));
     axios
       .patch(
-        `${API_URL}projects/edit/${projectId}/`,
+        `${API_URL}projects/edit/${data?.description?.id}/`,
         {
           ui_design_draft: esitContent,
         },
@@ -65,6 +64,11 @@ const Design = () => {
   function triggerExample() {
     navigator.clipboard.writeText(data?.description?.ui_design_draft);
   }
+
+  const UserStories = data?.description?.ui_design_draft?.replace(
+    /\n/g,
+    "<br><br>"
+  );
 
   return (
     <div>
@@ -106,7 +110,7 @@ const Design = () => {
               }}
             />
           ) : (
-            data?.description?.ui_design_draft
+            <p dangerouslySetInnerHTML={{ __html: UserStories }} />
           )}
         </Card>
       ) : null}
