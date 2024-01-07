@@ -87,9 +87,7 @@ const CompetitiveQuadrandChart = () => {
           </div>
 
           {data?.description?.competitive_quadrand_chart ? (
-            <QuadrantChart
-              dataString={`${data?.description?.competitive_quadrand_chart}`}
-            />
+            <QuadrantChart dataString={inputDataString} />
           ) : null}
 
           {/* {data?.description?.competitive_quadrand_chart} */}
